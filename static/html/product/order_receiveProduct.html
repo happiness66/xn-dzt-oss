@@ -1,0 +1,424 @@
+<link rel="import" href="../head.html?__inline">
+<script src="../../js/app/product/order-receiveProduct.js"></script>
+<style>
+    .tab-hd {
+        height: 46px;
+        background-color: #f7f7f7;
+        letter-spacing: 1.4px;
+        border-bottom: 1px solid #5daedb;
+        color: #666;
+    }
+    
+    .tab-hd span {
+        height: 45px;
+        line-height: 45px;
+        padding: 0 20px;
+        display: inline-block;
+        float: left;
+        cursor: pointer;
+    }
+    
+    .tab-hd span.act {
+        background: #5daedb;
+        color: #fff;
+    }
+    
+    .form-tab {
+        margin-top: 30px;
+        line-height: 34px;
+        display: none;
+    }
+    
+    .form-tab.act {
+        display: block;
+    }
+    
+    .form-tab .item-tab {
+        letter-spacing: 1px;
+        position: relative;
+        padding-left: 75px;
+        clear: both;
+    }
+    
+    .item-tab>span {
+        position: absolute;
+        display: inline-block;
+        height: 34px;
+        width: 120px;
+        text-align: left;
+        top: 0;
+        left: 0;
+        line-height: 34px;
+        z-index: -1;
+    }
+    
+    .item-tab .case {
+        min-height: 40px;
+        margin-bottom: 22px;
+        margin-left: 20px;
+        clear: both;
+    }
+    
+    .item-tab .case>span {
+        display: inline-block;
+        min-width: 95px;
+        margin-right: 5px;
+        padding: 0 10px;
+        height: 34px;
+        line-height: 32px;
+        text-align: center;
+        border-radius: 4px;
+        background: #f7f7f7;
+        border: 1px solid #cccccc;
+    }
+    
+    .item-tab .case>span.act {
+        background: #5daedb;
+        border: 1px solid #5daedb;
+        color: #fff;
+    }
+    
+    .case_Select {
+        width: 236px !important;
+        height: 40px !important;
+    }
+    
+    .chosen-container {
+        position: absolute;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        user-select: none;
+        width: 175px;
+        line-height: 32px;
+        padding-bottom: 5px;
+    }
+    
+    .chosen-container-single .chosen-single span {
+        display: block;
+        overflow: hidden;
+        margin-right: 26px;
+        white-space: nowrap;
+        text-indent: initial;
+    }
+    
+    .chosen-container-single .chosen-default {
+        color: rgb(153, 153, 153);
+    }
+    
+    .item-tab .caseimg {
+        margin-bottom: 10px;
+    }
+    
+    .item-tab .caseimg.imgcenter {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .item-tab .caseimg>div {
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .item-tab .caseimg>div.act {
+        color: #5daedb;
+    }
+    
+    .item-tab .caseimg>div p {
+        position: relative;
+        line-height: 70px;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+        border: 3px solid #cccccc;
+        border-radius: 4px;
+    }
+    
+    .item-tab .caseimg>div.act p {
+        border: 3px solid #5daedb;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+    
+    .item-tab .caseimg.imgcenter img,
+    .item-tab .caseimg.imgright img {
+        width: 60px;
+    }
+    
+    .item-tab .casebtn {
+        padding-bottom: 40px;
+    }
+    
+    .item-tab .casebtn input[type=button] {
+        width: 100px;
+        height: 40px;
+        background-color: #5daedb;
+        color: #fff;
+        margin-right: 2px;
+        border-radius: 4px;
+        line-height: 40px;
+        text-align: center;
+    }
+    
+    .modal-chose {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        transform: scale(0);
+        -webkit-transform: scale(0);
+        overflow: hidden;
+        top: 0;
+    }
+    
+    .modal-chose.open {
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+    
+    .modalbg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: background 0.6s ease 0s;
+        -moz-transition: background 0.6s ease 0s;
+        transition: background 0.6s ease 0s;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0);
+    }
+    
+    .modalbg.open {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .more-condition {
+        position: absolute;
+        width: 45%;
+        min-width: 500px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        background: #fff;
+        transform: translate(500px, 0);
+        -webkit-transform: translate(500px, 0);
+        -webkit-transition: transform 0.6s ease 0s;
+        -moz-transition: transform 0.6s ease 0s;
+        transition: transform 0.6s ease 0s;
+        transform-origin: right 0;
+        -moz-transform-origin: right 0;
+        -webkit-transform-origin: right 0;
+    }
+    
+    .more-condition.open {
+        transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
+    }
+    
+    .form {
+        margin: 60px 0 60px 115px;
+    }
+    
+    .more-condition .form {
+        margin-left: 58px;
+    }
+    
+    .more-condition .sel-tab {
+        margin: 40px 40px 40px 50px;
+    }
+    
+    .form-content {
+        margin-top: 30px;
+        color: #666;
+    }
+    
+    .more-condition .form-content {
+        margin-top: 10px;
+        color: #666;
+    }
+    
+    .item-form {
+        line-height: 40px;
+        position: relative;
+        padding-left: 70px;
+        margin-bottom: 20px;
+    }
+    
+    .item-form-l {
+        padding-left: 0;
+    }
+    
+    .item-form input[type=text] {
+        display: block;
+        padding-left: 10px;
+        height: 40px;
+        line-height: normal;
+        border: 1px solid #cccccc;
+        border-radius: 1px;
+        width: 305px;
+    }
+    
+    .item-form-l input[type=text] {
+        display: inline-block;
+        width: 220px;
+        background: url(http://brand.linkingchina.com.cn/Public/pad/css/css.css?20170417160721) repeat-x;
+    }
+    
+    .item-form input[type=button] {
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        border-radius: 4px;
+        background-color: #5daedb;
+        width: 150px;
+        line-height: 40px;
+    }
+    
+    .item-form-l input[type=button] {
+        width: 90px;
+        margin-left: 10px;
+    }
+    
+    .shell-con {
+        position: absolute;
+        top: 160px;
+        left: 50px;
+        right: 20px;
+        bottom: 40px;
+        margin: auto;
+        overflow: auto;
+    }
+    
+    .fab_type_list {
+        display: none;
+    }
+    
+    .fab_type_list.act {
+        display: block;
+    }
+    
+    .shell-con li {
+        float: left;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 10px;
+        letter-spacing: 0px;
+        color: #333;
+        padding-bottom: 10px;
+    }
+    
+    .shell-con li img {
+        width: 72px;
+        height: 72px;
+    }
+    
+    .cb {
+        clear: both;
+    }
+    
+    .shell-con li.act img {
+        border: 2px solid #991f21;
+    }
+    
+    .form-tab .item-tab {
+        letter-spacing: 1px;
+        position: relative;
+        padding-left: 75px;
+        clear: both;
+    }
+    
+    .form-tab .item-tab-fl {
+        float: left;
+        width: 25%;
+        clear: none;
+    }
+    
+    .item-tab .case input[type=text],
+    .item-tab .case input[type=number] {
+        height: 40px;
+        line-height: normal;
+        width: 150px;
+        border: 1px solid #cccccc;
+        background: #f7f7f7;
+        text-align: left;
+        padding-left: 10px;
+    }
+    
+    .item-tab .case>a {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 4px;
+        color: #bbb;
+        letter-spacing: 2px;
+        cursor: default;
+    }
+    
+    .item-form span {
+        position: absolute;
+        display: inline-block;
+        height: 40px;
+        width: 60px;
+        text-align: left;
+        top: 0;
+        left: 0;
+    }
+    
+    .item-form input[type=text].text-full {
+        width: 460px;
+    }
+    
+    .item-form input[type=text].text-fullt {
+        margin-top: 20px;
+    }
+    
+    .item-div {
+        width: 80%;
+        height: 30px;
+    }
+    
+    .cxradio {
+        margin-left: 50px;
+        margin-top: -30px
+    }
+    
+    .cover {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: #DBE3F5;
+        z-index: 1;
+        opacity: 0.5;
+        display: none;
+    }
+</style>
+<div class="place">
+    <span>位置：</span>
+    <ul>
+    </ul>
+</div>
+<form id="jsForm1">
+    <div class="form-body">
+        <div class="form-title"><span id="page-title"></span></div>
+        <ul class="form-info" id="form-info">
+
+        </ul>
+    </div>
+</form>
+<div id="jsForm">
+    <div class="form-body">
+        <div class="form-title clearfix"><span id="page-title">量体数据</span></div>
+        <div class="form-tab" id="ltsj" style="display:block !important;"></div>
+        <div class="form-title"><span>特体数据</span></div>
+        <div class="form-tab clearfix" id="ttsj" style="display:block !important;"></div>
+        <div class="tab-hd" id="navUl">
+        </div>
+        <div id="content"></div>
+    </div>
+</div>
+<link rel="import" href="../foot.html?__inline">
